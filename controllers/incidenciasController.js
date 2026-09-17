@@ -71,6 +71,32 @@ function eliminarIncidencia(req, res) {
     mensaje: 'Incidencia eliminada correctamente',
     incidencia: incidenciaEliminada[0]
   });
+
+function obtenerEstadisticas(req, res) {
+  const total = incidencias.length;
+
+  const estadisticasPorEstado = incidencias.reduce((resultado, incidencia) => {
+    resultado[incidencia.estado] =
+      (resultado[incidencia.estado] || 0) + 1;
+
+    return resultado;
+  }, {});
+
+  const estadisticasPorPrioridad = incidencias.reduce((resultado, incidencia) => {
+    resultado[incidencia.prioridad] =
+      (resultado[incidencia.prioridad] || 0) + 1;
+
+    return resultado;
+  }, {});
+
+  return res.status(200).json({
+    totalIncidencias: total,
+    porEstado: estadisticasPorEstado,
+    porPrioridad: estadisticasPorPrioridad
+  });
+
+  
+}
 }
 
 module.exports = {
