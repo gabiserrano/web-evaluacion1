@@ -46,6 +46,7 @@ function listarIncidencias(req, res) {
 
 function buscarIncidenciaPorId(req, res) {
   
+  
 
 }
 
@@ -95,7 +96,42 @@ function obtenerEstadisticas(req, res) {
     porPrioridad: estadisticasPorPrioridad
   });
 
-  
+function clasificarIncidencia(req, res) {
+  const id = Number(req.params.id);
+
+  const incidencia = incidencias.find(incidencia => incidencia.id === id);
+
+  if (!incidencia) {
+    return res.status(404).json({
+      mensaje: 'Incidencia no encontrada'
+    });
+  }
+
+  let clasificacion;
+
+  switch (incidencia.prioridad) {
+    case 'Alta':
+      clasificacion = 'Atención inmediata';
+      break;
+
+    case 'Media':
+      clasificacion = 'Atención prioritaria';
+      break;
+
+    case 'Baja':
+      clasificacion = 'Atención normal';
+      break;
+
+    default:
+      clasificacion = 'Prioridad no válida';
+  }
+
+  return res.status(200).json({
+    id: incidencia.id,
+    prioridad: incidencia.prioridad,
+    clasificacion: clasificacion
+  });
+}  
 }
 }
 
