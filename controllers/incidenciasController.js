@@ -55,15 +55,22 @@ function cambiarEstado(req, res) {
 
 // ===================== PERSONA 3 =====================
 function eliminarIncidencia(req, res) {
+  const id = Number(req.params.id);
 
-}
+  const indice = incidencias.findIndex(incidencia => incidencia.id === id);
 
-function obtenerEstadisticas(req, res) {
+  if (indice === -1) {
+    return res.status(404).json({
+      mensaje: 'Incidencia no encontrada'
+    });
+  }
 
-}
+  const incidenciaEliminada = incidencias.splice(indice, 1);
 
-function clasificarIncidencia(req, res) {
-
+  return res.status(200).json({
+    mensaje: 'Incidencia eliminada correctamente',
+    incidencia: incidenciaEliminada[0]
+  });
 }
 
 module.exports = {
