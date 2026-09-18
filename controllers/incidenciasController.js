@@ -133,8 +133,7 @@ function clasificarIncidencia(req, res) {
     clasificacion: clasificacion
   });
 }  
-}
-}
+
 
 module.exports = {
   registrarIncidencia,
