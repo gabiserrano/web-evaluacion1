@@ -56,7 +56,40 @@ function buscarIncidenciaPorId(req, res) {
 }
 
 function cambiarEstado(req, res) {
-  
+  const id = parseInt(req.params.id);
+  const { estado } = req.body;
+
+  const incidencia = incidencias.find((i) => i.id === id);
+
+  if (!incidencia) {
+    return res.status(404).json({ mensaje: 'Incidencia no encontrada' });
+  }
+
+  if (!ESTADOS_VALIDOS.includes(estado)) {
+    return res.status(400).json({
+      mensaje: `Estado inválido. Debe ser: ${ESTADOS_VALIDOS.join(', ')}`
+    });
+  }
+
+  switch (estado) {
+    case 'Pendiente':
+      incidencia.estado = 'Pendiente';
+      break;
+    case 'En Proceso':
+      incidencia.estado = 'En Proceso';
+      break;
+    case 'Resuelta':
+      incidencia.estado = 'Resuelta';
+      break;
+    case 'Cancelada':
+      incidencia.estado = 'Cancelada';
+      break;
+  }
+
+  return res.status(200).json({
+    mensaje: 'Estado de la incidencia actualizado correctamente',
+    incidencia
+  });
 }
 
 // ===================== PERSONA 3 =====================
