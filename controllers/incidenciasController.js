@@ -96,7 +96,7 @@ function obtenerEstadisticas(req, res) {
     porEstado: estadisticasPorEstado,
     porPrioridad: estadisticasPorPrioridad
   });
-
+}
 function clasificarIncidencia(req, res) {
   const id = Number(req.params.id);
 
