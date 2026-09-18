@@ -72,6 +72,7 @@ function eliminarIncidencia(req, res) {
     mensaje: 'Incidencia eliminada correctamente',
     incidencia: incidenciaEliminada[0]
   });
+}
 
 function obtenerEstadisticas(req, res) {
   const total = incidencias.length;
