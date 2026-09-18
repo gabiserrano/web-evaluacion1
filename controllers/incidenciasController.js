@@ -66,7 +66,7 @@ function cambiarEstado(req, res) {
   }
 
   if (!ESTADOS_VALIDOS.includes(estado)) {
-    return res.status(400).json({ mensaje: 'El estado es obligatorio' });
+    return res.status(400).json({ mensaje: 'Estado invalido. Debe ser: ${ESTADOS_VALIDOS.join(", ")}' });
   }
 
   switch (estado) {
@@ -85,9 +85,6 @@ function cambiarEstado(req, res) {
     case 'Cancelada':
       incidencia.estado = 'Cancelada';
       break;
-
-    default:
-      return res.status(400).json({ mensaje: 'Estado inválido. Debe ser Pendiente, En Proceso, Resuelta o Cancelada' });
   }
 
   return res.status(200).json({ mensaje: 'Estado de la incidencia actualizado correctamente' , incidencia });
@@ -123,6 +120,7 @@ function obtenerEstadisticas(req, res) {
     return resultado;
   }, {});
 
+
   const estadisticasPorPrioridad = incidencias.reduce((resultado, incidencia) => {
     resultado[incidencia.prioridad] =
       (resultado[incidencia.prioridad] || 0) + 1;
@@ -135,6 +133,7 @@ function obtenerEstadisticas(req, res) {
     porEstado: estadisticasPorEstado,
     porPrioridad: estadisticasPorPrioridad
   });
+}
 
 function clasificarIncidencia(req, res) {
   const id = Number(req.params.id);
@@ -171,7 +170,6 @@ function clasificarIncidencia(req, res) {
     prioridad: incidencia.prioridad,
     clasificacion: clasificacion
   });
-}  
 }
 
 module.exports = {
