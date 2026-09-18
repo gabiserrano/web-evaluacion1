@@ -41,17 +41,22 @@ function registrarIncidencia(req, res) {
 
 // ===================== PERSONA 2 =====================
 function listarIncidencias(req, res) {
-
+  return res.status(200).json(incidencias);
 }
 
 function buscarIncidenciaPorId(req, res) {
-  
-  
+  const id = parseInt(req.params.id);
+  const incidencia = incidencias.find((i) => i.id === id);
 
+  if (!incidencia) {
+    return res.status(404).json({ mensaje: 'Incidencia no encontrada' });
+  }
+
+  return res.status(200).json(incidencia);
 }
 
 function cambiarEstado(req, res) {
-
+  
 }
 
 // ===================== PERSONA 3 =====================
